@@ -12,8 +12,7 @@
             {{ encore_entry_script_tags('app') }}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
-        <link rel="icon" href="">
-        <link rel="icon" type="image/x-icon" href="{{ asset('build/images/fav.png') }}">
+        <link rel="icon" href="{{ asset('build/images/fav.png') }}" type="image/png" sizes="16x16">
     </head>
     <header>
         {% include 'components/_navbar.html.twig' %}
