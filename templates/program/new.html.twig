@@ -4,10 +4,6 @@
 
 {% block body %}
     <h1>Création d'une série</h1>
-    <p>Errors :</p>
-    {{ dump(form_errors(form)) }}
-    <br>
-    <p>Form :</p>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <button type="submit">Add program</button>
