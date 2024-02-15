@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/season')]
 class SeasonController extends AbstractController
 {
-    #[Route('/', name: 'app_season_index', methods: ['GET'])]
+    #[Route('/admin/index', name: 'app_season_index', methods: ['GET'])]
     public function index(SeasonRepository $seasonRepository): Response
     {
         return $this->render('season/index.html.twig', [
@@ -22,7 +22,7 @@ class SeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_season_new', methods: ['GET', 'POST'])]
+    #[Route('/admin/new', name: 'app_season_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $season = new Season();
@@ -42,7 +42,7 @@ class SeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_season_show', methods: ['GET'])]
+    #[Route('/admin/show/{id}', name: 'app_season_show', methods: ['GET'])]
     public function show(Season $season): Response
     {
         return $this->render('season/show.html.twig', [
@@ -50,7 +50,7 @@ class SeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_season_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/edit/{id}', name: 'app_season_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Season $season, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(SeasonType::class, $season);

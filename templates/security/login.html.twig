@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<main class="container my-5">
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                <p>Vous êtes déjà connecté en tant que {{ app.user.userIdentifier }}<p>
+                <a href="{{ path('app_logout') }}">Déconnexion</a> ou <a href="{{ path('app_user') }}">Retourner dans mon espace</a>
+            </div>
+        {% else %}
+
+        <h1 class="h3 mb-5 font-weight-normal">Accéder à mon espace</h1>
+        <label for="inputEmail">Email</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" placeholder="mon@email.com" required autofocus>
+        <label for="inputPassword">Mot de passe</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" placeholder="******" required>
+
+        <input type="hidden" name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}"
+        >
+
+        <button class="btn btn-success mt-3" type="submit">
+            Connexion
+        </button>
+        <a href="{{ path('app_register') }}" class="btn btn-link mt-2">Je n'ai pas encore de compte</a>
+        {% endif %}
+    </form>
+</main>
+{% endblock %}

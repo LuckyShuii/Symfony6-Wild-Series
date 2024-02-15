@@ -37,7 +37,7 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'new')]
+    #[Route('/admin/new', name: 'new')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $program = new Program();
@@ -116,7 +116,7 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'admin_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/edit/{id}', name: 'admin_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Program $program, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ProgramType::class, $program);
@@ -134,7 +134,7 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'admin_delete', methods: ['POST'])]
+    #[Route('/admin/delete/{id}', name: 'admin_delete', methods: ['POST'])]
     public function delete(Request $request, Program $program, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $program->getId(), $request->request->get('_token'))) {
