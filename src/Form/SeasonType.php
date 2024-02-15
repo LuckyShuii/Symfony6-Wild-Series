@@ -14,12 +14,42 @@ class SeasonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('number')
-            ->add('year')
-            ->add('description')
+            ->add('number', null, [
+                'label' => 'Numéro',
+                'attr' => [
+                    'placeholder' => 'Numéro de la saison',
+                    'class' => 'form-control mb-3'
+                ]
+            ])
+            ->add(
+                'year',
+                null,
+                [
+                    'label' => 'Année',
+                    'attr' => [
+                        'placeholder' => 'Année de la saison',
+                        'class' => 'form-control mb-3'
+                    ]
+                ]
+            )
+            ->add(
+                'description',
+                null,
+                [
+                    'label' => 'Description',
+                    'attr' => [
+                        'placeholder' => 'Description de la saison',
+                        'class' => 'form-control mb-3'
+                    ]
+                ]
+            )
             ->add('program', EntityType::class, [
                 'class' => Program::class,
                 'choice_label' => 'title',
+                'label' => 'Série',
+                'attr' => [
+                    'class' => 'form-control mb-3'
+                ]
             ]);
     }
 

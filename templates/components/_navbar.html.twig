@@ -16,3 +16,25 @@
   </div>
 </nav>
 
+<nav class="bg-dark navbar navbar-expand-lg navbar-light">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="/">Admin Wild Series</a>
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link text-white" aria-current="page" href="/program">Séries</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{{ path('app_season_index') }}">Saisons</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{{ path('app_episode_index') }}">Episodes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" aria-current="page" href="{{ path('category_index') }}">Catégorie</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" aria-current="page" href="{{ path('program_new') }}">⊕ Série</a>
+        </li>
+      </ul>
+  </div>
+</nav>

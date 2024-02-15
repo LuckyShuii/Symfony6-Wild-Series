@@ -1,36 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Séries {{ category.name }}{% endblock %}
+{% block title %}Catégorie{% endblock %}
 
 {% block body %}
-    <div class="album py-5 bg-light">
-        <div class="container">
-            {% if category.programs|length == 0 %}
-                <h1 class="jumbotron-heading mb-4">Aucune série trouvée</h1>
-                <a href="{{ path('program_index') }}"><button type="button" class="btn btn-secondary">Toutes les séries</button></a>
-            {% else %}
-                <h1 class="jumbotron-heading mb-4">Les séries "{{ category.name }}"</h1>
-                <a href="{{ path('program_index') }}"><button type="button" class="btn btn-secondary">Toutes les séries</button></a>
-                <div class="row">
-                    {% for program in programs %}
-                        <div class="col-md-3 col-xl-3 my-4">
-                            <div class="card mb-4 box-shadow h-100">
-                                <img style="height: 60%; object-fit: cover" src="{{ program.poster }}" alt="Image aléatoire" />
-                                <div class="card-body">
-                                    <h3>{{ program.title }}</h3>
-                                    <p class="card-text pb-4">{{ program.synopsis }}</p>
-                                    <div class="d-flex justify-content-between align-items-center mb-2 position-absolute bottom-0">
-                                        <div class="btn-group">
-                                            <a href="{{ path('program_show', {id: program.id}) }}"><button type="button" class="btn btn-primary w-100">Plus d'infos</button></a>
-                                        </div>
-                                        <small class="text-muted">{{ program.year }}</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div>
-    </div>
+<main class="container mt-4">
+    <h1 class="my-5">Détails sur la catégorie {{ category.name }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ category.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ category.name }}</td>
+            </tr>
+            <tr>
+                <th>Séries concernées ({{ category.programs|length }})</th>
+                <td>                    
+                {% for program in category.programs %}
+                    {{ program.title }},
+                {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    {# {{ path('app_episode_edit', {'id': category.id}) }} #}
+    <a href=""><button type="button" class="btn btn-primary mt-2">✎ Modifier</button></a>
+
+    <a href="{{ path('category_index') }}"><button type="button" class="btn btn-secondary mt-2">Retour à la liste</button></a>
+</main>
 {% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories{% endblock %}
+
+{% block body %}
+<main class="container">
+    <div class="d-flex align-items-center my-5">
+        <h1 class="my-2">Liste des catégories</h1>
+        <a href="{{ path('category_new') }}"><button type="button" class="btn btn-primary m-4">⊕ Ajouter</button></a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Séries associées</th>
+                <th class="th-action">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>
+                    <p>
+                    {% for program in category.programs %}
+                    {{ program.title }},
+                    {% endfor %}
+                    </p>
+                </td>
+                <td>
+                    <a href="{{ path('category_show', {'id': category.id}) }}" class="m-1"><button type="button" class="btn btn-primary ">Voir</button></a>
+                    {# {{ path('category_edit', {'id': category.id}) }} #}
+                    <a href="" class="m-1"><button type="button" class="btn btn-secondary">Modifier</button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</main>
+{% endblock %}

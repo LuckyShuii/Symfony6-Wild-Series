@@ -18,7 +18,7 @@ class EpisodeController extends AbstractController
     public function index(EpisodeRepository $episodeRepository): Response
     {
         return $this->render('episode/index.html.twig', [
-            'episodes' => $episodeRepository->findAll(),
+            'episodes' => $episodeRepository->findEverythingByProgramTitleAsc(),
         ]);
     }
 
@@ -71,7 +71,7 @@ class EpisodeController extends AbstractController
     #[Route('/{id}', name: 'app_episode_delete', methods: ['POST'])]
     public function delete(Request $request, Episode $episode, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$episode->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $episode->getId(), $request->request->get('_token'))) {
             $entityManager->remove($episode);
             $entityManager->flush();
         }

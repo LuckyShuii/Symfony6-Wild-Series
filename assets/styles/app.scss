@@ -1,11 +1,8 @@
 $primary: #173FD0;
 $secondary: #000000;
-$bs-nav-link-color: white;
 
 @import "~/node_modules/bootstrap/scss/bootstrap";
 
-header {
-    box-shadow: 0px 5px 5px -5px black;
+.th-action {
+    width: 11rem;
 }
-
-

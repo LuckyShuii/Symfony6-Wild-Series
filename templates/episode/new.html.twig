@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Episode{% endblock %}
+{% block title %}Ajout d'épisode{% endblock %}
 
 {% block body %}
-    <h1>Create new Episode</h1>
+<main class="container mt-4">
+    <h1 class="my-5">Créer un épisode</h1>
 
     {{ include('episode/_form.html.twig') }}
-
-    <a href="{{ path('app_episode_index') }}">back to list</a>
+</main>
 {% endblock %}

@@ -16,20 +16,13 @@ use Doctrine\ORM\EntityManagerInterface;
 #[Route('/category', name: 'category_')]
 class CategoryController extends AbstractController
 {
-    #[Route('/', name: 'index', methods: ['POST', 'GET'])]
-    public function index(Request $request, CategoryRepository $categoryRepository): Response
+    #[Route('/', name: 'index', methods: ['GET'])]
+    public function index(CategoryRepository $categoryRepository): Response
     {
-        $form = $this->createForm(CategorySelectType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $category = $form->getData();
-            $categoryName = $category->getName();
-            return $this->redirectToRoute('category_show', ['categoryName' => $categoryName]);
-        }
+        $categories = $categoryRepository->findAll();
 
         return $this->render('category/index.html.twig', [
-            'form' => $form,
+            'categories' => $categories,
         ]);
     }
 
@@ -53,8 +46,16 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/show/', name: 'show', methods: ['GET', 'POST'])]
-    public function show(Request $request, CategoryRepository $categoryRepository): Response
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
+    public function show(Category $category): Response
+    {
+        return $this->render('category/show.html.twig', [
+            'category' => $category,
+        ]);
+    }
+
+    #[Route('/show-with-programs', name: 'show_with_programs', methods: ['GET', 'POST'])]
+    public function showWithPrograms(Request $request, CategoryRepository $categoryRepository): Response
     {
         $categoryName = $request->get('category_select')['name'];
         $category = $categoryRepository->findBy(['name' => $categoryName], ['name' => 'DESC'], 3);
@@ -68,7 +69,7 @@ class CategoryController extends AbstractController
 
         $programs = $category[0]->getPrograms();
 
-        return $this->render('category/show.html.twig', [
+        return $this->render('category/show_with_programs.html.twig', [
             'programs' => $programs,
             'category' => $category[0],
         ]);

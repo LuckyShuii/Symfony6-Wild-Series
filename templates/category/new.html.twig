@@ -3,8 +3,12 @@
 {% block title %}Création d'une catégorie{% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit">Add category</button>
-    {{ form_end(form) }}
+    <main class="container mt-4">
+        <h1 class="my-5">Création d'une catégorie</h1>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary mt-2">⊕ Ajouter</button>
+        <a href="{{ path('category_index') }}"><button type="button" class="btn btn-secondary mt-2">Retour à la liste</button></a>
+        {{ form_end(form) }}
+    </main>
 {% endblock %}

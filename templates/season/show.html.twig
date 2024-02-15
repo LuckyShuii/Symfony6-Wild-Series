@@ -3,7 +3,8 @@
 {% block title %}Season{% endblock %}
 
 {% block body %}
-    <h1>Season</h1>
+<main class="container mt-4">
+    <h1>Détails sur la saison {{ season.number }}</h1>
 
     <table class="table">
         <tbody>
@@ -12,23 +13,34 @@
                 <td>{{ season.id }}</td>
             </tr>
             <tr>
-                <th>Number</th>
+                <th>Numéro</th>
                 <td>{{ season.number }}</td>
             </tr>
             <tr>
-                <th>Year</th>
+                <th>Année de sortie</th>
                 <td>{{ season.year }}</td>
             </tr>
             <tr>
                 <th>Description</th>
                 <td>{{ season.description }}</td>
             </tr>
+            <tr>
+                <th>Nombre d'épisodes</th>
+                <td>{{ season.episodes|length }}</td>
+            </tr>
+            <tr>
+                <th>Série</th>
+                <td>{{ season.program.title }}</td>
+            </tr>
+            <tr>
+                <th>Catégorie</th>
+                <td>{{ season.program.category.name }}</td>
+            </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_season_index') }}">back to list</a>
+    <a href="{{ path('app_season_edit', {'id': season.id}) }}"><button type="button" class="btn btn-primary mt-2">✎ Modifier</button></a>
 
-    <a href="{{ path('app_season_edit', {'id': season.id}) }}">edit</a>
-
-    {{ include('season/_delete_form.html.twig') }}
+    <a href="{{ path('app_season_index') }}"><button type="button" class="btn btn-secondary mt-2">Retour à la liste</button></a>
+</main>
 {% endblock %}
