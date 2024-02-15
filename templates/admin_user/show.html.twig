@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+<main class="container mt-4">
+    <h1 class="my-5">Informations de l'utilisateur : {{ user.email }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}"><button type="button" class="btn btn-primary mt-2">✎ Modifier</button></a>
+
+    <a href="{{ path('app_admin_user_index') }}"><button type="button" class="btn btn-secondary mt-2">Retour à la liste</button></a>
+</main>
+{% endblock %}

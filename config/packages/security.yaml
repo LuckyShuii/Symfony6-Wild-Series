@@ -35,7 +35,7 @@ security:
         - { path: ^/season/admin, roles: ROLE_ADMIN }
         - { path: ^/episode/admin, roles: ROLE_ADMIN }
         - { path: ^/category/admin, roles: ROLE_ADMIN }
-        - { path: ^/user/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin/user, roles: ROLE_ADMIN }
         - { path: ^/user, roles: ROLE_USER }
         - { path: ^/user/favoris, roles: ROLE_USER }
 

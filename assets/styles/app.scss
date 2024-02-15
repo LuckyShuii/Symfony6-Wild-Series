@@ -6,3 +6,11 @@ $secondary: #000000;
 .th-action {
     width: 11rem;
 }
+
+#admin_registration_form_roles_1, #user_roles_1 {
+    margin-left: 1rem !important;
+}
+
+input[type="checkbox"] {
+    margin-right: 0.5rem !important;
+}
