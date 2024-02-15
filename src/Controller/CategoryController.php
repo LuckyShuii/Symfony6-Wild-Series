@@ -54,6 +54,24 @@ class CategoryController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Category $category, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('category_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('category/edit.html.twig', [
+            'category' => $category,
+            'form' => $form,
+        ]);
+    }
+
     #[Route('/show-with-programs', name: 'show_with_programs', methods: ['GET', 'POST'])]
     public function showWithPrograms(Request $request, CategoryRepository $categoryRepository): Response
     {
@@ -73,5 +91,22 @@ class CategoryController extends AbstractController
             'programs' => $programs,
             'category' => $category[0],
         ]);
+    }
+
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request, Category $category = null, EntityManagerInterface $entityManager): Response
+    {
+        if (!$category) {
+            throw $this->createNotFoundException(
+                'No category found'
+            );
+        }
+
+        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($category);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('category_index', [], Response::HTTP_SEE_OTHER);
     }
 }

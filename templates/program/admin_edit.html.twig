@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}✏️ {{ program.title }}{% endblock %}
+
+{% block body %}
+    <main class="container mt-5">
+        <h1 class="my-4">Modifier la série {{ program.title }}</h1>
+
+        {{ include('program/_form.html.twig', {'button_label': '✎ Modifier'}) }}
+
+        {{ include('program/_delete_form.html.twig') }}
+    </main>
+{% endblock %}

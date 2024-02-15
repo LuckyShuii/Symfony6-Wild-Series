@@ -25,14 +25,13 @@
                 <td>
                     <p>
                     {% for program in category.programs %}
-                    {{ program.title }},
+                        {{ program.title }},
                     {% endfor %}
                     </p>
                 </td>
                 <td>
                     <a href="{{ path('category_show', {'id': category.id}) }}" class="m-1"><button type="button" class="btn btn-primary ">Voir</button></a>
-                    {# {{ path('category_edit', {'id': category.id}) }} #}
-                    <a href="" class="m-1"><button type="button" class="btn btn-secondary">Modifier</button></a>
+                    <a href="{{ path('category_edit', {'id': category.id}) }}" class="m-1"><button type="button" class="btn btn-secondary">Modifier</button></a>
                 </td>
             </tr>
         {% else %}

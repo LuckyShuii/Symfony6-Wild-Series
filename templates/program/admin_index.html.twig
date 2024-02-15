@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Séries{% endblock %}
+
+{% block body %}
+    <main class="container">
+        <div class="d-flex align-items-center my-5">
+            <h1 class="my-2">Liste des séries</h1>
+            <a href="{{ path('program_new') }}"><button type="button" class="btn btn-primary m-4">⊕ Ajouter</button></a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Série</th>
+                    <th>Catégorie</th>
+                    <th>Année</th>
+                    <th>Pays</th>
+                    <th>Description</th>
+                    <th class="th-action">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for program in programs %}
+                <tr>
+                    <td>{{ program.title }}</td>
+                    <td>{{ program.category.name }}</td>
+                    <td>{{ program.year }}</td>
+                    <td>{{ program.country }}</td>
+                    <td>{{ program.synopsis }}</td>
+                    <td>
+                        <a href="{{ path('program_admin_show', {'id': program.id}) }}" class="m-1"><button type="button" class="btn btn-primary ">Voir</button></a>
+                        <a href="{{ path('program_admin_edit', {'id': program.id}) }}" class="m-1"><button type="button" class="btn btn-secondary">Modifier</button></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </main>
+{% endblock %}

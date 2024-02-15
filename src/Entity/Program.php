@@ -45,7 +45,7 @@ class Program
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $poster = null;
 
-    #[ORM\ManyToOne(inversedBy: 'programs')]
+    #[ORM\ManyToOne(inversedBy: 'programs', cascade: ['remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
@@ -55,7 +55,7 @@ class Program
     #[ORM\Column(nullable: true)]
     private ?int $year = null;
 
-    #[ORM\OneToMany(targetEntity: Season::class, mappedBy: 'program')]
+    #[ORM\OneToMany(targetEntity: Season::class, mappedBy: 'program', cascade: ['remove'])]
     private Collection $seasons;
 
     public function __construct()

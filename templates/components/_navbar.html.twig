@@ -10,7 +10,13 @@
           <a class="nav-link text-white" aria-current="page" href="/">Accueil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="/program">Séries</a>
+          <a class="nav-link text-white" href="{{ path('program_index') }}">Séries</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="">Connexion</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{{ path('app_register') }}">Inscription</a>
         </li>
       </ul>
   </div>
@@ -21,7 +27,7 @@
     <a class="navbar-brand text-white" href="/">Admin Wild Series</a>
       <ul class="nav">
         <li class="nav-item">
-          <a class="nav-link text-white" aria-current="page" href="/program">Séries</a>
+          <a class="nav-link text-white" aria-current="page" href="{{ path('program_admin_index') }}">Séries</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white" href="{{ path('app_season_index') }}">Saisons</a>
@@ -33,7 +39,7 @@
           <a class="nav-link text-white" aria-current="page" href="{{ path('category_index') }}">Catégorie</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" aria-current="page" href="{{ path('program_new') }}">⊕ Série</a>
+          <a class="nav-link text-white" aria-current="page" href="#">Utilisateurs</a>
         </li>
       </ul>
   </div>

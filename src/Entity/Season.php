@@ -27,7 +27,7 @@ class Season
     #[ORM\ManyToOne(inversedBy: 'seasons')]
     private ?Program $program = null;
 
-    #[ORM\OneToMany(targetEntity: Episode::class, mappedBy: 'season', fetch: 'EAGER')]
+    #[ORM\OneToMany(targetEntity: Episode::class, mappedBy: 'season', fetch: 'EAGER', cascade: ['remove'])]
     private Collection $episodes;
 
     public function __construct()

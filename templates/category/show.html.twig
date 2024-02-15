@@ -27,8 +27,7 @@
         </tbody>
     </table>
 
-    {# {{ path('app_episode_edit', {'id': category.id}) }} #}
-    <a href=""><button type="button" class="btn btn-primary mt-2">✎ Modifier</button></a>
+    <a href="{{ path('category_edit', {'id': category.id}) }}"><button type="button" class="btn btn-primary mt-2">✎ Modifier</button></a>
 
     <a href="{{ path('category_index') }}"><button type="button" class="btn btn-secondary mt-2">Retour à la liste</button></a>
 </main>

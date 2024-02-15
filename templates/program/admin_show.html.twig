@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ program.title }}{% endblock %}
+
+{% block body %}
+    <main class="container mt-4">
+        <h1 class="my-5">Détails sur la série {{ program.title }}</h1>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ program.id }}</td>
+                </tr>
+                <tr>
+                    <th>Titre</th>
+                    <td>{{ program.title }}</td>
+                </tr>
+                <tr>
+                    <th>Résumé</th>
+                    <td>{{ program.synopsis }}</td>
+                </tr>
+                <tr>
+                    <th>Image</th>
+                    <td>{{ program.poster }}</td>
+                </tr>
+                <tr>
+                    <th>Pays</th>
+                    <td>{{ program.country }}</td>
+                </tr>
+                <tr>
+                    <th>Année de diffusion</th>
+                    <td>{{ program.year }}</td>
+                </tr>
+                <tr>
+                    <th>Category</th>
+                    <td>{{ program.category.name }}</td>
+                </tr>
+                <tr>
+                    <th>Saisons</th>
+                    <td>{{ program.seasons|length }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('program_admin_edit', {'id': program.id}) }}"><button type="button" class="btn btn-primary mt-2">✎ Modifier</button></a>
+        
+        <a href="{{ path('program_admin_index') }}"><button type="button" class="btn btn-secondary mt-2">Retour à la liste</button></a>
+    </main>
+{% endblock %}

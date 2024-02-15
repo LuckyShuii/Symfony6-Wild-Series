@@ -23,7 +23,16 @@ class ProgramController extends AbstractController
         $programs = $programRepository->findAll();
 
         return $this->render('program/index.html.twig', [
-            'website' => 'Wild Series',
+            'programs' => $programs,
+        ]);
+    }
+
+    #[Route('/admin/index', name: 'admin_index')]
+    public function adminIndex(ProgramRepository $programRepository): Response
+    {
+        $programs = $programRepository->findAll();
+
+        return $this->render('program/admin_index.html.twig', [
             'programs' => $programs,
         ]);
     }
@@ -40,7 +49,7 @@ class ProgramController extends AbstractController
             $entityManager->persist($program);
             $entityManager->flush();
 
-            return $this->redirectToRoute('program_index');
+            return $this->redirectToRoute('program_admin_index');
         }
         return $this->render('program/new.html.twig', [
             'form' => $form,
@@ -104,6 +113,43 @@ class ProgramController extends AbstractController
             'program' => $oneProgram,
             'season' => $seasons,
             'episode' => $episode,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'admin_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Program $program, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('program_admin_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('program/admin_edit.html.twig', [
+            'program' => $program,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'admin_delete', methods: ['POST'])]
+    public function delete(Request $request, Program $program, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $program->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($program);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('program_admin_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/admin/show/{id}', name: 'admin_show', methods: ['GET'])]
+    public function adminShow(Program $program): Response
+    {
+        return $this->render('program/admin_show.html.twig', [
+            'program' => $program,
         ]);
     }
 }
