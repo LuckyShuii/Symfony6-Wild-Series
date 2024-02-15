@@ -3,9 +3,11 @@
 {% block title %}Création d'une série{% endblock %}
 
 {% block body %}
-    <h1>Création d'une série</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit">Add program</button>
-    {{ form_end(form) }}
+    <main class="container mt-4">
+        <h1 class="my-5">Création d'une série</h1>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary mt-2">Add program</button>
+        {{ form_end(form) }}
+    </main>
 {% endblock %}

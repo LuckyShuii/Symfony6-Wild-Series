@@ -3,22 +3,26 @@
 {% block title %}{{ program.title }} - S{{ season.number }}{% endblock %}
 
 {% block body %}
-    <h1>Saison {{ season.number }} de {{ program.title }}</h1>
-    <hr>
-    <p>Description de la série : {{ program.synopsis }}</p>
-    <p>Description de la saison : {{ season.description }}</p>
-    <h2>Liste des épisodes</h2>
-    <ul>
+    <div class="container marketing mt-5">
+        <div class="row featurette">
+          <div class="col-md-7 order-md-2">
+            <h1>{{ program.title }} - Saison {{ season.number }}</h1>
+            {{ include('/components/_button_all_series.html.twig') }}
+            <a href="{{ path('program_show', { 'id': program.id }) }}"><button type="button" class="btn btn-secondary">Retour</button></a>
+            <hr>
+            <p>Description de la série : {{ program.synopsis }}</p>
+            <p>Description de la saison : {{ season.description }}</p>
+            <h2>Liste des épisodes</h2>
+            <ul>
         {% for episode in season.episodes %}
             <li>
                 <p><a href="{{ path('program_episode_show', {'program_id': program.id, 'season_id': season.id, 'episode_id': episode.id }) }}">{{ episode.title }}</a> : {{ episode.synopsis }}</p>
             </li>
         {% endfor %}
-    <a href="{{ path('program_index') }}">
-        Retour à la liste des programmes
-    </a>
-    <br>
-    <a href="{{ path('category_show', {'categoryName': program.category.name}) }}">
-        Voir tous les programmes de cette catégorie
-    </a>
+          </div>
+          <div class="col-md-5 order-md-1">
+            {{ include('/components/_detail_program_image.html.twig') }}
+          </div>
+        </div>
+    </div>
 {% endblock %}

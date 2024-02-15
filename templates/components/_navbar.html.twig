@@ -1,15 +1,16 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="bg-dark navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">Wild Series</a>
-      <ul class="nav text-primary">
+    <a class="navbar-brand text-white" href="/">Wild Series</a>
+        <li class="d-flex">
+            {{ render(controller('App\\Controller\\FormController::categorySelectForm')) }}
+        </li>
+      <ul class="nav">
+      
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link text-white" aria-current="page" href="/">Accueil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/program">Programs</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="/category">Categories</a>
+          <a class="nav-link text-white" href="/program">Séries</a>
         </li>
       </ul>
   </div>

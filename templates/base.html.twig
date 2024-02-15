@@ -7,7 +7,6 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
-
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
@@ -17,7 +16,10 @@
     <header>
         {% include 'components/_navbar.html.twig' %}
     </header>
-    <body class="primary">
+    <body class="d-flex flex-column min-vh-100">
         {% block body %}{% endblock %}
     </body>
+    <footer class="container mt-auto">
+        {% include 'components/_footer.html.twig' %}
+    </footer>
 </html>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Form\CategorySelectType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProgramRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,14 +16,20 @@ use Doctrine\ORM\EntityManagerInterface;
 #[Route('/category', name: 'category_')]
 class CategoryController extends AbstractController
 {
-    #[Route('/', name: 'index')]
-    public function index(CategoryRepository $categoryRepository): Response
+    #[Route('/', name: 'index', methods: ['POST', 'GET'])]
+    public function index(Request $request, CategoryRepository $categoryRepository): Response
     {
-        $categories = $categoryRepository->findAll();
+        $form = $this->createForm(CategorySelectType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $category = $form->getData();
+            $categoryName = $category->getName();
+            return $this->redirectToRoute('category_show', ['categoryName' => $categoryName]);
+        }
 
         return $this->render('category/index.html.twig', [
-            'website' => 'Wild Series',
-            'categories' => $categories,
+            'form' => $form,
         ]);
     }
 
@@ -46,16 +53,11 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{categoryName}', name: 'show')]
-    public function show(string $categoryName, CategoryRepository $categoryRepository): Response
+    #[Route('/show/', name: 'show', methods: ['GET', 'POST'])]
+    public function show(Request $request, CategoryRepository $categoryRepository): Response
     {
-        // Si une catégorie existe, cette méthode récupère toutes les séries présentes en base de données qui appartiennent à cette catégorie. 
-
-        if (!$categoryName) {
-            throw $this->createNotFoundException('No category has been sent to find a program in category\'s table.');
-        }
-
-        $category = $categoryRepository->findBy(['name' => $categoryName], ['id' => 'DESC'], 3);
+        $categoryName = $request->get('category_select')['name'];
+        $category = $categoryRepository->findBy(['name' => $categoryName], ['name' => 'DESC'], 3);
 
         // renvoie une erreur si la category name n'existe pas
         if (!$category) {

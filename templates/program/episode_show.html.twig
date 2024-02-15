@@ -3,8 +3,19 @@
 {% block title %}{{ program.title }} - S{{ season.number }} E{{ episode.number }}{% endblock %}
 
 {% block body %}
-    <h1>S{{ season.number }} E{{ episode.number }}: {{ program.title }}</h1>
-    <p>Titre : {{ episode.title }}</p>
-    <p>Résumé de l'épisode : {{ episode.synopsis }}</p>
-    <img src="{{ program.poster }}" alt="serie image">
+    <div class="container marketing mt-5">
+        <div class="row featurette">
+          <div class="col-md-7 order-md-2">
+            <h1>{{ program.title }} - Saison {{ season.number }} Episode {{ episode.number }}</h1>
+            {{ include('/components/_button_all_series.html.twig') }}
+            <a href="{{ path('program_season_show', {'program_id': program.id, 'season_id': season.id}) }}"><button type="button" class="btn btn-secondary">Retour</button></a>
+            <hr>
+            <p>Titre : {{ episode.title }}</p>
+            <p>Résumé de l'épisode : {{ episode.synopsis }}</p>
+          </div>
+          <div class="col-md-5 order-md-1">
+            {{ include('/components/_detail_program_image.html.twig') }}
+          </div>
+        </div>
+    </div>
 {% endblock %}

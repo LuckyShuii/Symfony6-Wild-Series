@@ -14,14 +14,67 @@ class ProgramType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('synopsis')
-            ->add('poster')
-            ->add('country')
-            ->add('year')
+            ->add(
+                'title',
+                null,
+                [
+                    'label' => 'Titre',
+                    'attr' => [
+                        'placeholder' => 'Titre de la série',
+                        'class' => 'form-control mb-3'
+                    ]
+                ]
+            )
+            ->add(
+                'synopsis',
+                null,
+                [
+                    'label' => 'Synopsis',
+                    'attr' => [
+                        'placeholder' => 'Synopsis de la série',
+                        'class' => 'form-control mb-3'
+                    ]
+                ]
+            )
+            ->add(
+                'poster',
+                null,
+                [
+                    'label' => 'Lien de l\'image',
+                    'attr' => [
+                        'placeholder' => 'https://www.exemple.com/image.jpg',
+                        'class' => 'form-control mb-3'
+                    ]
+                ]
+            )
+            ->add(
+                'country',
+                null,
+                [
+                    'label' => 'Pays',
+                    'attr' => [
+                        'placeholder' => 'Espagne',
+                        'class' => 'form-control mb-3'
+                    ]
+                ]
+            )
+            ->add(
+                'year',
+                null,
+                [
+                    'label' => 'Année de diffusion',
+                    'attr' => [
+                        'placeholder' => '2013',
+                        'class' => 'form-control mb-3'
+                    ]
+                ]
+            )
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
+                'attr' => [
+                    'class' => 'form-select mb-3',
+                ],
             ]);
     }
 

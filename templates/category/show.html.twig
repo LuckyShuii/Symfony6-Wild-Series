@@ -1,22 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Categorieeeees{% endblock %}
+{% block title %}Séries {{ category.name }}{% endblock %}
 
 {% block body %}
-    {{ category.name }}
-    {% if category.programs|length == 0 %}
-        <p>Aucune série trouvée</p>
-    {% else %}
-        {% for program in programs %}
-            <div>
-                <a href="{{ path('program_show', { 'id': program.id }) }}">{{ program.title }}</a>
-                <p>id : {{ program.id }}</p>
-                <p>synopsis : {{ program.synopsis }}</p>
-            </div>
-            <br>
-        {% endfor %}
-    {% endif %}
-    <a href="{{ path('program_index') }}">
-        Retour à la liste des programmes
-    </a>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            {% if category.programs|length == 0 %}
+                <h1 class="jumbotron-heading mb-4">Aucune série trouvée</h1>
+                <a href="{{ path('program_index') }}"><button type="button" class="btn btn-secondary">Toutes les séries</button></a>
+            {% else %}
+                <h1 class="jumbotron-heading mb-4">Les séries "{{ category.name }}"</h1>
+                <a href="{{ path('program_index') }}"><button type="button" class="btn btn-secondary">Toutes les séries</button></a>
+                <div class="row">
+                    {% for program in programs %}
+                        <div class="col-md-3 col-xl-3 my-4">
+                            <div class="card mb-4 box-shadow h-100">
+                                <img style="height: 60%; object-fit: cover" src="{{ program.poster }}" alt="Image aléatoire" />
+                                <div class="card-body">
+                                    <h3>{{ program.title }}</h3>
+                                    <p class="card-text pb-4">{{ program.synopsis }}</p>
+                                    <div class="d-flex justify-content-between align-items-center mb-2 position-absolute bottom-0">
+                                        <div class="btn-group">
+                                            <a href="{{ path('program_show', {id: program.id}) }}"><button type="button" class="btn btn-primary w-100">Plus d'infos</button></a>
+                                        </div>
+                                        <small class="text-muted">{{ program.year }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

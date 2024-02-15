@@ -3,21 +3,32 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-    <h1>Toutes les séries de la table program : </h1>
-    {% for program in programs %}
-        <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-            <p>{{ program.synopsis }}</p>
-            <p>Catégorie : {{ program.category.name }}</p>
-            <a href="{{ path('program_show', {id: program.id}) }}">
-                Voir la série
-            </a>
+    {% if programs is defined %}
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <h1 class="jumbotron-heading mb-4">Toutes nos séries</h1>
+            <div class="row">
+                {% for program in programs %}
+                    <div class="col-md-3 col-xl-3 my-4">
+                        <div class="card mb-4 box-shadow h-100">
+                            <img style="height: 60%; object-fit: cover" src="{{ program.poster }}" alt="Image aléatoire" />
+                            <div class="card-body">
+                                <h3>{{ program.title }}</h3>
+                                <p class="card-text pb-4">{{ program.synopsis }}</p>
+                                <div class="d-flex justify-content-between align-items-center mb-2 position-absolute bottom-0">
+                                    <div class="btn-group">
+                                        <a href="{{ path('program_show', {id: program.id}) }}"><button type="button" class="btn btn-primary w-100">Plus d'infos</button></a>
+                                    </div>
+                                    <small class="text-muted">{{ program.year }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
+    </div>
     {% else %}
         Aucune série trouvée.
-    {% endfor %}
-
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
-    </a>
+    {% endif %}
 {% endblock %}

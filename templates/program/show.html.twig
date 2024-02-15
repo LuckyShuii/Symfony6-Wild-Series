@@ -3,10 +3,12 @@
 {% block title %}{{ program.title }}{% endblock %}
 
 {% block body %}
-    <div class="media">
-        <img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
-        <div class="media-body">
+    <div class="container marketing mt-5">
+        <div class="row featurette">
+          <div class="col-md-7 order-md-2">
             <h1 class="mt-0">{{ program.title }}</h1>
+            {{ include('/components/_button_all_series.html.twig') }}
+            <hr>
             <p>{{ program.synopsis }}</p>
             <p>Catégorie : {{ program.category.name }}</p>
             <ul>
@@ -18,14 +20,10 @@
                     </li>
                 {% endfor %}
             </ul>
+          </div>
+          <div class="col-md-5 order-md-1">
+            {{ include('/components/_detail_program_image.html.twig') }}
+          </div>
         </div>
     </div>
-
-    <a href="{{ path('program_index') }}">
-        Retour à la liste des programmes
-    </a>
-    <br>
-    <a href="{{ path('category_show', {'categoryName': program.category.name}) }}">
-        Voir tous les programmes de cette catégorie
-    </a>
 {% endblock %}
