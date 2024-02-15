@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -28,6 +30,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\OneToMany(targetEntity: WatchList::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private Collection $watchLists;
 
     public function getId(): ?int
     {
@@ -97,5 +102,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|WatchList[]
+     */
+    public function getWatchLists(): Collection
+    {
+        return $this->watchLists;
+    }
+
+    public function addWatchList(WatchList $watchList): self
+    {
+        if (!$this->watchLists->contains($watchList)) {
+            $this->watchLists[] = $watchList;
+            $watchList->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWatchList(WatchList $watchList): self
+    {
+        if ($this->watchLists->removeElement($watchList)) {
+            // set the owning side to null (unless already changed)
+            if ($watchList->getUser() === $this) {
+                $watchList->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

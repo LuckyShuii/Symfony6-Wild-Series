@@ -13,20 +13,15 @@
                 <a href="{{ path('program_index') }}"><button type="button" class="btn btn-secondary">Toutes les séries</button></a>
                 <div class="row">
                     {% for program in programs %}
-                        <div class="col-md-3 col-xl-3 my-4">
-                            <div class="card mb-4 box-shadow h-100">
-                                <img style="height: 60%; object-fit: cover" src="{{ program.poster }}" alt="Image aléatoire" />
-                                <div class="card-body">
-                                    <h3>{{ program.title }}</h3>
-                                    <p class="card-text pb-4">{{ program.synopsis }}</p>
-                                    <div class="d-flex justify-content-between align-items-center mb-2 position-absolute bottom-0">
-                                        <div class="btn-group">
-                                            <a href="{{ path('program_show', {id: program.id}) }}"><button type="button" class="btn btn-primary w-100">Plus d'infos</button></a>
-                                        </div>
-                                        <small class="text-muted">{{ program.year }}</small>
-                                    </div>
+                        <div class="col-xl-3 my-4 col-lg-4 col-md-6 col-sm-12">
+                            <a class="h-100" href="{{ path('program_show', {id: program.id}) }}">
+                                <div class="card box-shadow h-100">
+                                    <img src="{{ program.poster }}" alt="Image aléatoire" class="img-fluid object-fit-cover h-100" />
                                 </div>
-                            </div>
+                                {% if app.user %}
+                                    <a href="">Ajouter à ma liste</a>
+                                {% endif %}
+                            </a>
                         </div>
                     {% endfor %}
                 </div>

@@ -58,6 +58,9 @@ class Program
     #[ORM\OneToMany(targetEntity: Season::class, mappedBy: 'program', cascade: ['remove'])]
     private Collection $seasons;
 
+    #[ORM\OneToOne(mappedBy: 'program', cascade: ['persist', 'remove'])]
+    private ?WatchList $watchList = null;
+
     public function __construct()
     {
         $this->seasons = new ArrayCollection();
@@ -166,6 +169,23 @@ class Program
                 $season->setProgram(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getWatchList(): ?WatchList
+    {
+        return $this->watchList;
+    }
+
+    public function setWatchList(WatchList $watchList): static
+    {
+        // set the owning side of the relation if necessary
+        if ($watchList->getProgram() !== $this) {
+            $watchList->setProgram($this);
+        }
+
+        $this->watchList = $watchList;
 
         return $this;
     }
