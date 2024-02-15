@@ -11,11 +11,7 @@
     </li>
     {% if app.user %}
     <li class="nav-item d-flex align-items-center">
-    <a class="nav-link text-white" href="#">Mon profil</a>
-    </li>
-    <li class="nav-item d-flex align-items-center">
-    <a class="nav-link text-white" href="#">Mes favoris</a>
-    </li>
+    <a class="nav-link text-white" href="{{ path('app_user') }}">Mon profil</a>
     <li class="nav-item d-flex align-items-center flex-column">
         <a class="nav-link text-white" href="{{ path('app_logout') }}"><button type="button" class="btn btn-danger">Déconnexion</button></a>
     </li>

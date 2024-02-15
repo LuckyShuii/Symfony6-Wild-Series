@@ -14,3 +14,9 @@ $secondary: #000000;
 input[type="checkbox"] {
     margin-right: 0.5rem !important;
 }
+
+div:has(#registration_form_agreeTerms) {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}

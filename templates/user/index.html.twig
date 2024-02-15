@@ -1,9 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Mon espace{% endblock %}
 
 {% block body %}
 <main class="container">
     <h1 class="mt-5">Connecté sous l'email : {{ app.user.email }}</h1>
+    <h2>Mes favoris</h2>
+    {% if favoris is defined %}
+        <ul>
+            {% for favori in favoris %}
+                <li>{{ favori.name }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous n'avez pas encore de favoris, <a href="{{ path('program_index') }}">voir la liste des séries</a></p>
+    {% endif %}
 </main>
 {% endblock %}
