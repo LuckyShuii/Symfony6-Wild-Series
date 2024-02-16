@@ -70,7 +70,7 @@ class UserCredentialsType extends AbstractType
                 'label' => 'Ancien ou nouveau mot de passe',
                 'attr' => [
                     'placeholder' => '********',
-                    'class' => 'form-control mb-2',
+                    'class' => 'form-control mb-4',
                     'value' => ''
                 ],
                 'constraints' => [
