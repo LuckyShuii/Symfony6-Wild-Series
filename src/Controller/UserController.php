@@ -69,6 +69,9 @@ class UserController extends AbstractController
     {
         $user = $userRepository->find($request->query->get('user_id'));
         $program = $programRepository->find($request->query->get('program_id'));
+        $page = $request->query->get('page');
+
+        $page = $page === 'user' ? 'app_user' : 'program_index';
 
         $watchlists = $watchListRepository->findByUser($user);
 
@@ -85,6 +88,6 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->redirectToRoute('program_index');
+        return $this->redirectToRoute($page);
     }
 }

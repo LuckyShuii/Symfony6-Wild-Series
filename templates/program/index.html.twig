@@ -29,7 +29,7 @@
                                 {% else %}
                                     <a href="{{ path("app_user_add_favoris", {"program_id": program.id, "user_id": app.user.id}) }}">Ajouter à ma liste</a>
                                     {% if app.user.watchLists.contains(program) %}
-                                        <a href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id}) }}">Retirer de ma liste</a>
+                                        <a href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id, "page": "program_index"}) }}">Retirer de ma liste</a>
                                     {% endif %}
                                 {% endif %}
                             {% endif %}

@@ -4,20 +4,34 @@
 
 {% block body %}
 <main class="container">
-    <h1 class="mt-5">Connecté sous l'email : {{ app.user.email }}</h1>
-    <h2>Mes favoris</h2>
+    <h1 class="mt-5 mb-5">Connecté sous l'email : {{ app.user.email }}</h1>
+    <div class="d-flex">
+        <h2 class="me-2">Ma liste</h2>
+        {{ include('/components/_button_all_series.html.twig') }}
+    </div>
     {% if watchlists is defined %}
-        <ul>
-            {% set isFav = false %}
-            {% for watchlist in watchlists %}
-                {% if watchlist.programs|length > 0 %}
-                    {% for program in watchlist.programs %}
-                        {% set isFav = true %}
-                        <li>{{ program.title }}</li>
-                    {% endfor %}
-                {% endif %}
-            {% endfor %}
-        </ul>
+        <div class="album bg-light">
+            <div class="container">
+                <div class="row">
+                {% set isFav = false %}
+                {% for watchlist in watchlists %}
+                    {% if watchlist.programs|length > 0 %}
+                        {% for program in watchlist.programs %}
+                            {% set isFav = true %}
+                            <div class="col-xl-3 my-4 col-lg-4 col-md-6 col-sm-12">
+                                <a class="h-100" href="{{ path('program_show', {id: program.id}) }}">
+                                    <div class="card box-shadow h-100">
+                                        <img src="{{ program.poster }}" alt="Image aléatoire" class="img-fluid object-fit-cover h-100" />
+                                    </div>
+                                    <a href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id, "page": "user"}) }}">Retirer de ma liste</a>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
     {% else %}
         <p>Vous n'avez pas encore de favoris, <a href="{{ path('program_index') }}">voir la liste des séries</a></p>
     {% endif %}
