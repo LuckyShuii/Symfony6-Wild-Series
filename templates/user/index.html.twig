@@ -6,13 +6,22 @@
 <main class="container">
     <h1 class="mt-5">Connecté sous l'email : {{ app.user.email }}</h1>
     <h2>Mes favoris</h2>
-    {% if favoris is defined %}
+    {% if watchlists is defined %}
         <ul>
-            {% for favori in favoris %}
-                <li>{{ favori.name }}</li>
+            {% set isFav = false %}
+            {% for watchlist in watchlists %}
+                {% if watchlist.programs|length > 0 %}
+                    {% for program in watchlist.programs %}
+                        {% set isFav = true %}
+                        <li>{{ program.title }}</li>
+                    {% endfor %}
+                {% endif %}
             {% endfor %}
         </ul>
     {% else %}
+        <p>Vous n'avez pas encore de favoris, <a href="{{ path('program_index') }}">voir la liste des séries</a></p>
+    {% endif %}
+    {% if (isFav == false) %}
         <p>Vous n'avez pas encore de favoris, <a href="{{ path('program_index') }}">voir la liste des séries</a></p>
     {% endif %}
 </main>

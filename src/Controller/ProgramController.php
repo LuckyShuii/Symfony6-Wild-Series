@@ -22,16 +22,9 @@ class ProgramController extends AbstractController
     public function index(ProgramRepository $programRepository, UserRepository $userRepository): Response
     {
         $programs = $programRepository->findAll();
-        $user = null;
-
-        // si l'utilisateur est connecté
-        if ($this->getUser()) {
-            $user = $userRepository->findUserWithWatchListsAndPrograms($this->getUser()->getId());
-        }
 
         return $this->render('program/index.html.twig', [
             'programs' => $programs,
-            'user' => $user,
         ]);
     }
 

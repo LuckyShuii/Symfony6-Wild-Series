@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\WatchList;
 use App\Repository\ProgramRepository;
 use App\Repository\UserRepository;
@@ -19,10 +20,24 @@ class UserController extends AbstractController
 {
     #[Route('/', name: '')]
     #[IsGranted('VOTER_USER', statusCode: 403, message: 'Vous devez être connecté pour accéder à cette page')]
-    public function index(): Response
+    public function index(UserRepository $userRepository): Response
     {
+
+        $user = new User();
+
+        $user = $userRepository->find($this->getUser()->getId());
+        $watchlists = $user->getWatchLists();
+
+        foreach ($watchlists as $watchlist) {
+            $watchlist->getPrograms()->initialize();
+        }
+
+        if ($watchlists->isEmpty()) {
+            $watchlists = null;
+        }
+
         return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
+            'watchlists' => $watchlists
         ]);
     }
 

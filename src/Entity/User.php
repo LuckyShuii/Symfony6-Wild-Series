@@ -34,6 +34,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: WatchList::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private Collection $watchLists;
 
+    public function __construct()
+    {
+        $this->watchLists = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
