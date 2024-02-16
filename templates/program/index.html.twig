@@ -10,7 +10,7 @@
             <div class="row">
                 {% for program in programs %}
                     {% set programIsWatchList = false %}
-                    <div class="col-xl-3 my-4 col-lg-4 col-md-6 col-sm-12">
+                    <div class="col-xl-3 my-5 col-lg-4 col-md-6 col-sm-12">
                         <a class="h-100" href="{{ path('program_show', {id: program.id}) }}">
                             <div class="card box-shadow h-100">
                                 <img src="{{ program.poster }}" alt="Image aléatoire" class="img-fluid object-fit-cover h-100" />
@@ -25,11 +25,11 @@
                                 {% endfor %}
 
                                 {% if programIsWatchList == true %}
-                                    <a href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id}) }}">Retirer de ma liste</a>
+                                    <a class="mt-2 w-100 text-decoration-none d-flex justify-content-center" href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id}) }}"><button class="btn btn-danger">ⓧ Retirer de ma liste</button></a>
                                 {% else %}
-                                    <a href="{{ path("app_user_add_favoris", {"program_id": program.id, "user_id": app.user.id}) }}">Ajouter à ma liste</a>
+                                    <a class="mt-2 w-100 text-decoration-none d-flex justify-content-center" href="{{ path("app_user_add_favoris", {"program_id": program.id, "user_id": app.user.id}) }}"><button class="btn btn-success">⊕ Ajouter à ma liste</button></a>
                                     {% if app.user.watchLists.contains(program) %}
-                                        <a href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id, "page": "program_index"}) }}">Retirer de ma liste</a>
+                                        <a class="mt-2 w-100 text-decoration-none d-flex justify-content-center" href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id, "page": "program_index"}) }}"><button class="btn btn-danger">ⓧ Retirer de ma liste</button></a>
                                     {% endif %}
                                 {% endif %}
                             {% endif %}

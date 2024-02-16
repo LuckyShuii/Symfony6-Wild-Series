@@ -18,12 +18,12 @@
                     {% if watchlist.programs|length > 0 %}
                         {% for program in watchlist.programs %}
                             {% set isFav = true %}
-                            <div class="col-xl-3 my-4 col-lg-4 col-md-6 col-sm-12">
+                            <div class="col-xl-3 mt-4 mb-5 col-lg-4 col-md-6 col-sm-12">
                                 <a class="h-100" href="{{ path('program_show', {id: program.id}) }}">
                                     <div class="card box-shadow h-100">
                                         <img src="{{ program.poster }}" alt="Image aléatoire" class="img-fluid object-fit-cover h-100" />
                                     </div>
-                                    <a href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id, "page": "user"}) }}">Retirer de ma liste</a>
+                                    <a class="mt-2 w-100 text-decoration-none d-flex justify-content-center" href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id, "page": "user"}) }}"><button class="btn btn-danger">ⓧ Retirer</button></a>
                                 </a>
                             </div>
                         {% endfor %}
