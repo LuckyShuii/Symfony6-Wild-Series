@@ -20,3 +20,15 @@ div:has(#registration_form_agreeTerms) {
     flex-direction: row-reverse;
     justify-content: flex-end;
 }
+
+#user_index_picture {
+    width: 20%;
+    max-width: 15rem;
+    min-width: 10rem;
+}
+
+@media screen and (max-width: 530px) {
+    #user_information {
+        flex-direction: column !important;
+    }
+}

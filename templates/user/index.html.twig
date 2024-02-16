@@ -4,8 +4,49 @@
 
 {% block body %}
 <main class="container">
-    <h1 class="mt-5 mb-5">Connecté sous l'email : {{ app.user.email }}</h1>
-    <div class="d-flex">
+    <h1 class="mt-5 mb-5">Mon espace privé 😎</h1>
+    <hr>
+    <div class="d-flex mt-4">
+        <div id="user_information" class="d-flex mb-4 align-items-center">
+            <img id="user_index_picture" src="{{ app.user.picture ?? asset('build/images/user_pictures/profile/default.svg') }}" alt="Avatar de {{ app.user.username }}" class="object-fit-cover rounded-circle" />
+            <div class="ms-4 ">
+                <h2 class="mb-4">Mes informations 🔦</h2>
+                <div class="d-flex">
+                    <div>
+                        <p><strong>Pseudo :</strong> {{ app.user.username }}</p>
+                        <p><strong>Prénom :</strong> {{ app.user.firstname }}</p>
+                        <p><strong>Nom :</strong> {{ app.user.lastname }}</p>
+                    </div>
+                    <div class="ms-4">
+                        <p><strong>Email :</strong> {{ app.user.email }}</p>
+                        <p><strong>Créé le :</strong> {{ app.user.createdAt|date('d/m/Y') }}</p>
+                    </div>
+                </div>
+                <div class="d-flex align-self-end">
+                    <div>
+                        {# {{ path('app_user_edit', {'id': app.user.id}) }} #}
+                        <a href="" class="btn btn-primary">✎ Mes informations</a>
+                        {# {{ path('app_user_edit_password', {'id': app.user.id}) }} #}
+                        <a href="" class="btn btn-secondary">✎ Mot de passe</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="d-flex flex-column mb-4">
+        <h3>Ma Bio ✐</h3>
+    {% if app.user.biography is not null %}
+        <p>↪ <q>{{ app.user.biography }}</q></p>
+        <a href=""><button class="btn btn-primary">✎ Modifier ma biographie</button></a>
+    {% else %}
+        <p>Vous n'avez pas encore de biographie..</p>
+        {# {{ path('app_user_edit', {'id': app.user.id}) }} #}
+        <a href=""><button class="btn btn-primary">✎ Ajouter une biographie</button></a>
+    {% endif %}
+    </div>
+    <hr>
+    <div class="d-flex mt-4">
         <h2 class="me-2">Ma liste</h2>
         {{ include('/components/_button_all_series.html.twig') }}
     </div>
