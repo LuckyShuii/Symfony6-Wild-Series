@@ -22,15 +22,15 @@ div:has(#registration_form_agreeTerms) {
 }
 
 #user_index_picture {
-    width: 20%;
-    max-width: 15rem;
-    min-width: 10rem;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
 }
 
 #user_index_picture_admin {
-    width: 20%;
-    max-width: 10rem;
-    min-width: 5rem;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
 }
 
 td {

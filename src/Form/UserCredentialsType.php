@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use App\Form\DTO\UserCredentialsDTO;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
@@ -10,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class UserCredentialsType extends AbstractType
 {
@@ -76,13 +78,23 @@ class UserCredentialsType extends AbstractType
                         'message' => 'Veuillez entrer un mot de passe'
                     ])
                 ]
+            ])
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Photo de profil',
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => false,
+                'image_uri' => false,
+                'attr' => [
+                    'class' => 'form-control mb-4'
+                ]
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => UserCredentialsDTO::class
+            'data_class' => User::class
         ]);
     }
 }

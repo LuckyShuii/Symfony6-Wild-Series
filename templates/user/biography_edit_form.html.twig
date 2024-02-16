@@ -2,13 +2,60 @@
 
 {% block title %}✏️ Biographie{% endblock %}
 
+{% block javascripts %}
+    <script src="https://cdn.tiny.cloud/1/wl25iw5m11qdadriw7ydrzcem834w4ut3reunnnac3y5vbrb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+      <script>
+        document.addEventListener('focusin', (e) => {
+            if (e.target.closest(".tox-tinymce, .tox-tinymce-aux, .moxman-window, .tam-assetmanager-root") !== null) {
+                e.stopImmediatePropagation();
+            }
+        });
+    </script>
+    <script src="/path/to/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#biography_biography',
+            /*setup: function (editor) {
+                editor.on('init', function () {
+                    document.getElementById('compteur').innerHTML = editor.getContent().length;
+                });
+                editor.on('keyup', function () {
+                    document.getElementById('compteur').innerHTML = editor.getContent().length;
+                });
+            },*/
+        });
+
+        setTimeout(() => {
+            let submit_button = document.getElementById('submit_button');
+            let textarea = document.getElementById('biography_biography');
+            let form = document.getElementById('form_biography');
+
+            submit_button.addEventListener('click', () => {
+                let biography = tinymce.activeEditor.getContent();
+                textarea.value = biography;
+                form.submit();
+            });
+        }, 500);
+
+    </script>
+{% endblock %}
+
 {% block body %}
     <main class="container mt-5">
+        <div class="card mb-4 bg-warning">
+            <div class="card-body mt-2">
+                <h5 class="mb-4">👷🏼‍♂️ À venir dans une prochaine version </h5>
+                <ul class="list-unstyled ms-4">
+                    <li>🔨 Limiter le nombre de caractères</li>
+                    <li>🔨 Compteur de caractères qui fonctionne</li>
+                </ul>
+            </div>
+        </div>
         <h1 class="my-4">Modifier ma biographie</h1>
-
-        {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button class="btn btn-primary mt-2">⊕ Modifier</button>
+        {# <div id="compteur" style="text-align:right">0</div> #}
+        {{ form_start(form, {'attr': {'id': 'form_biography'}}) }}
+            {{ form_row(form.biography) }}
+            <button id="submit_button" type="button" class="btn btn-primary mt-2">⊕ Modifier</button>
             <a href="{{ path('app_user') }}"><button type="button" class="btn btn-secondary mt-2">Retour</button></a>
         {{ form_end(form) }}
     </main>

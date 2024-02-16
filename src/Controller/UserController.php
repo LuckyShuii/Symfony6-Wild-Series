@@ -72,26 +72,14 @@ class UserController extends AbstractController
     {
         $user = $userRepository->find($this->getUser()->getId());
 
-        $userCredentialsDTO = new UserCredentialsDTO();
-        $userCredentialsDTO->username = $user->getUsername();
-        $userCredentialsDTO->firstname = $user->getFirstname();
-        $userCredentialsDTO->lastname = $user->getLastname();
-        $userCredentialsDTO->email = $user->getEmail();
-        $userCredentialsDTO->password = $user->getPassword();
-
-        $form = $this->createForm(UserCredentialsType::class, $userCredentialsDTO);
+        $form = $this->createForm(UserCredentialsType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Update the User object with the data from the DTO
-            $user->setUsername($userCredentialsDTO->username);
-            $user->setFirstname($userCredentialsDTO->firstname);
-            $user->setLastname($userCredentialsDTO->lastname);
-            $user->setEmail($userCredentialsDTO->email);
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $userCredentialsDTO->password
+                    $form->get('password')->getData()
                 )
             );
 
