@@ -23,7 +23,7 @@
                                     <div class="card box-shadow h-100">
                                         <img src="{{ program.poster }}" alt="Image aléatoire" class="img-fluid object-fit-cover h-100" />
                                     </div>
-                                    <a class="mt-2 w-100 text-decoration-none d-flex justify-content-center" href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id, "page": "user"}) }}"><button class="btn btn-danger">ⓧ Retirer</button></a>
+                                    <a class="mt-2 w-100 text-decoration-none d-flex justify-content-center" href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id, "page": "user_index"}) }}"><button class="btn btn-danger">ⓧ Retirer</button></a>
                                 </a>
                             </div>
                         {% endfor %}

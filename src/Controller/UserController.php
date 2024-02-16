@@ -45,6 +45,13 @@ class UserController extends AbstractController
     #[IsGranted('VOTER_USER', statusCode: 403, message: 'Vous devez être connecté pour accéder à cette page')]
     public function addFavoris(EntityManagerInterface $entityManager, UserRepository $userRepository, ProgramRepository $programRepository, Request $request): Response
     {
+        $page = $request->query->get('page');
+
+        $page = match ($page) {
+            'program_index' => 'program_index',
+            'user_index' => 'app_user',
+            default => 'program_index'
+        };
         /**
          * Si l'entrée dans la table watchlist n'existe pas déjà, on l'ajoute
          */
@@ -60,7 +67,7 @@ class UserController extends AbstractController
         $entityManager->persist($watchlist);
         $entityManager->flush();
 
-        return $this->redirectToRoute('program_index');
+        return $this->redirectToRoute($page);
     }
 
     #[Route('/favoris/remove', name: '_remove_favoris', methods: ['POST', 'GET'])]
@@ -73,7 +80,7 @@ class UserController extends AbstractController
 
         $page = match ($page) {
             'program_index' => 'program_index',
-            'user_index' => 'user_index',
+            'user_index' => 'app_user',
             default => 'program_index'
         };
 

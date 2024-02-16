@@ -25,9 +25,9 @@
                                 {% endfor %}
 
                                 {% if programIsWatchList == true %}
-                                    <a class="mt-2 w-100 text-decoration-none d-flex justify-content-center" href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id}) }}"><button class="btn btn-danger">ⓧ Retirer de ma liste</button></a>
+                                    <a class="mt-2 w-100 text-decoration-none d-flex justify-content-center" href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id, "page": "program_index"}) }}"><button class="btn btn-danger">ⓧ Retirer de ma liste</button></a>
                                 {% else %}
-                                    <a class="mt-2 w-100 text-decoration-none d-flex justify-content-center" href="{{ path("app_user_add_favoris", {"program_id": program.id, "user_id": app.user.id}) }}"><button class="btn btn-success">⊕ Ajouter à ma liste</button></a>
+                                    <a class="mt-2 w-100 text-decoration-none d-flex justify-content-center" href="{{ path("app_user_add_favoris", {"program_id": program.id, "user_id": app.user.id, "page": "program_index"}) }}"><button class="btn btn-success">⊕ Ajouter à ma liste</button></a>
                                     {% if app.user.watchLists.contains(program) %}
                                         <a class="mt-2 w-100 text-decoration-none d-flex justify-content-center" href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id, "page": "program_index"}) }}"><button class="btn btn-danger">ⓧ Retirer de ma liste</button></a>
                                     {% endif %}
