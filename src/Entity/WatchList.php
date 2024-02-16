@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\WatchListRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WatchListRepository::class)]
@@ -17,15 +19,20 @@ class WatchList
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(targetEntity: Program::class, inversedBy: 'watchLists')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Program $program = null;
+    #[ORM\ManyToMany(targetEntity: Program::class)]
+    private Collection $programs;
 
     #[ORM\Column]
     private ?bool $seen = null;
 
     #[ORM\Column]
     private ?bool $liked = null;
+
+    public function __construct()
+    {
+        $this->programs = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -55,14 +62,23 @@ class WatchList
         return $this;
     }
 
-    public function getProgram(): ?Program
+    public function getPrograms(): Collection
     {
-        return $this->program;
+        return $this->programs;
     }
 
-    public function setProgram(Program $program): static
+    public function addProgram(Program $program): self
     {
-        $this->program = $program;
+        if (!$this->programs->contains($program)) {
+            $this->programs[] = $program;
+        }
+
+        return $this;
+    }
+
+    public function removeProgram(Program $program): self
+    {
+        $this->programs->removeElement($program);
 
         return $this;
     }

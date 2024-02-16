@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\ProgramRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,12 +19,19 @@ use Symfony\Component\HttpFoundation\Request;
 class ProgramController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(ProgramRepository $programRepository): Response
+    public function index(ProgramRepository $programRepository, UserRepository $userRepository): Response
     {
         $programs = $programRepository->findAll();
+        $user = null;
+
+        // si l'utilisateur est connecté
+        if ($this->getUser()) {
+            $user = $userRepository->findUserWithWatchListsAndPrograms($this->getUser()->getId());
+        }
 
         return $this->render('program/index.html.twig', [
             'programs' => $programs,
+            'user' => $user,
         ]);
     }
 

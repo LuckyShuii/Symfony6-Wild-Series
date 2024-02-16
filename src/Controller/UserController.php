@@ -35,12 +35,40 @@ class UserController extends AbstractController
          */
         $watchlist = new WatchList();
         $watchlist->setUser($userRepository->find($request->query->get('user_id')));
-        $watchlist->setProgram($programRepository->find($request->query->get('program_id')));
+
+        $program = $programRepository->find($request->query->get('program_id'));
+        $watchlist->addProgram($program);
+
         $watchlist->setLiked(false);
         $watchlist->setSeen(false);
 
         $entityManager->persist($watchlist);
         $entityManager->flush();
+
+        return $this->redirectToRoute('program_index');
+    }
+
+    #[Route('/favoris/remove', name: '_remove_favoris', methods: ['POST', 'GET'])]
+    #[IsGranted('VOTER_USER', statusCode: 403, message: 'Vous devez être connecté pour accéder à cette page')]
+    public function removeFavoris(EntityManagerInterface $entityManager, UserRepository $userRepository, ProgramRepository $programRepository, Request $request, WatchListRepository $watchListRepository): Response
+    {
+        $user = $userRepository->find($request->query->get('user_id'));
+        $program = $programRepository->find($request->query->get('program_id'));
+
+        $watchlists = $watchListRepository->findByUser($user);
+
+        foreach ($watchlists as $watchlist) {
+            $watchlist->getPrograms()->initialize();
+
+            if ($watchlist->getPrograms()->contains($program)) {
+                $watchlist->removeProgram($program);
+
+                $entityManager->persist($watchlist);
+                $entityManager->flush();
+
+                break;
+            }
+        }
 
         return $this->redirectToRoute('program_index');
     }

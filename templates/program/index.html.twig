@@ -3,13 +3,13 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-    {% set programInWatchList = false %}
     {% if programs is defined %}
     <div class="album py-5 bg-light">
         <div class="container">
             <h1 class="jumbotron-heading mb-4">Toutes nos séries</h1>
             <div class="row">
                 {% for program in programs %}
+                    {% set programIsWatchList = false %}
                     <div class="col-xl-3 my-4 col-lg-4 col-md-6 col-sm-12">
                         <a class="h-100" href="{{ path('program_show', {id: program.id}) }}">
                             <div class="card box-shadow h-100">
@@ -17,14 +17,15 @@
                             </div>
                             {% if app.user %}
                                 {% for watchList in app.user.watchLists %}
-                                    {% if watchList.program.id == program.id %}
-                                        {% set programInWatchList = true %}
-                                    {% endif %}
+                                    {% for programInWatchList in watchList.programs %}
+                                        {% if programInWatchList.id == program.id %}
+                                            {% set programIsWatchList = true %}
+                                        {% endif %}
+                                    {% endfor %}
                                 {% endfor %}
 
-                                {% if programInWatchList == true %}
-                                {# {{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id}) }} #}
-                                    <a href="">Retirer de ma liste</a>
+                                {% if programIsWatchList == true %}
+                                    <a href="{{ path("app_user_remove_favoris", {"program_id": program.id, "user_id": app.user.id}) }}">Retirer de ma liste</a>
                                 {% else %}
                                     <a href="{{ path("app_user_add_favoris", {"program_id": program.id, "user_id": app.user.id}) }}">Ajouter à ma liste</a>
                                     {% if app.user.watchLists.contains(program) %}
@@ -34,7 +35,6 @@
                             {% endif %}
                         </a>
                     </div>
-                    {% set programInWatchList = false %}
                 {% endfor %}
             </div>
         </div>
