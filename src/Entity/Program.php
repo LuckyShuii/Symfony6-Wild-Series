@@ -58,12 +58,13 @@ class Program
     #[ORM\OneToMany(targetEntity: Season::class, mappedBy: 'program', cascade: ['remove'])]
     private Collection $seasons;
 
-    #[ORM\OneToOne(mappedBy: 'program', cascade: ['persist', 'remove'])]
-    private ?WatchList $watchList = null;
+    #[ORM\OneToMany(targetEntity: WatchList::class, mappedBy: 'program', cascade: ['persist', 'remove'])]
+    private Collection $watchLists;
 
     public function __construct()
     {
         $this->seasons = new ArrayCollection();
+        $this->watchLists = new ArrayCollection();
     }
 
     public function getId(): ?int

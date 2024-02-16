@@ -12,11 +12,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/user', name: 'app_user')]
 class UserController extends AbstractController
 {
     #[Route('/', name: '')]
+    #[IsGranted('VOTER_USER', statusCode: 403, message: 'Vous devez être connecté pour accéder à cette page')]
     public function index(): Response
     {
         return $this->render('user/index.html.twig', [
@@ -25,6 +27,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/favoris/add', name: '_add_favoris', methods: ['POST', 'GET'])]
+    #[IsGranted('VOTER_USER', statusCode: 403, message: 'Vous devez être connecté pour accéder à cette page')]
     public function addFavoris(EntityManagerInterface $entityManager, UserRepository $userRepository, ProgramRepository $programRepository, Request $request): Response
     {
         /**
