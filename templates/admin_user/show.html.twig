@@ -4,13 +4,31 @@
 
 {% block body %}
 <main class="container mt-4">
-    <h1 class="my-5">Informations de l'utilisateur : {{ user.email }}</h1>
+    <h1 class="my-5">Informations sur : {{ user.username }}</h1>
 
     <table class="table">
         <tbody>
             <tr>
+                <th>
+                    <img id="user_index_picture_admin" src="{{ user.picture ?? asset('build/images/user_pictures/profile/default.svg') }}" alt="Avatar de {{ user.username }}" class="object-fit-cover rounded-circle" />
+                </th>
+                <td></td>
+            </tr>
+            <tr>
                 <th>Id</th>
                 <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ user.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ user.username }}</td>
             </tr>
             <tr>
                 <th>Email</th>
@@ -18,7 +36,19 @@
             </tr>
             <tr>
                 <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>
+                    {% for role in user.roles %}
+                        <span class="badge bg-{{ role == "ROLE_ADMIN" ? "danger" : "primary" }}">{{ role }}</span>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Biographie</th>
+                <td><q>{{ user.biography ?? "Aucune bioraphie d'écrite par l'utilisateur" }}</q></td>
+            </tr>
+            <tr>
+                <th>Créé le</th>
+                <td>{{ user.createdAt|date('d/m/Y à H:i:s') }}</td>
             </tr>
         </tbody>
     </table>

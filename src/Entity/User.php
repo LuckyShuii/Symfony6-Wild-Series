@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Il ne vous est pas possible de vous inscrire avec cette adresse email. Veuillez en choisir une autre.')]
+#[UniqueEntity(fields: ['username'], message: 'Il ne vous est pas possible de vous inscrire avec ce nom d\'utilisateur. Veuillez en choisir un autre.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

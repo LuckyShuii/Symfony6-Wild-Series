@@ -5,6 +5,14 @@
 {% block body %}
 <main class="container my-5 d-flex justify-content-center w-100">
     <form method="post">
+        <div class="card mb-4 bg-warning">
+        <div class="card-body mt-2">
+            <h5 class="mb-4">👷🏼‍♂️ À venir dans une prochaine version </h5>
+            <ul class="list-unstyled ms-4">
+                <li>🔨 J'ai oublié mon mot de passe</li>
+            </ul>
+        </div>
+    </div>
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}

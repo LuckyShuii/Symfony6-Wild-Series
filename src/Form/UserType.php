@@ -16,6 +16,33 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('username', null, [
+                'label' => 'Nom d\'utilisateur',
+                'attr' => ['class' => 'form-control mb-3'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner un nom d\'utilisateur',
+                    ]),
+                ]
+            ])
+            ->add('firstname', null, [
+                'label' => 'Prénom',
+                'attr' => ['class' => 'form-control mb-3'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner un prénom',
+                    ]),
+                ]
+            ])
+            ->add('lastname', null, [
+                'label' => 'Nom',
+                'attr' => ['class' => 'form-control mb-3'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner un nom',
+                    ]),
+                ]
+            ])
             ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'attr' => ['class' => 'form-control mb-3'],
@@ -25,16 +52,12 @@ class UserType extends AbstractType
                     ]),
                 ]
             ])
-            ->add('password', PasswordType::class, [
-                'mapped' => false,
-                'attr' => [
-                    'autocomplete' => 'new-password',
-                    'placeholder' => '******',
-                    'class' => 'form-control mb-3'
-                ],
+            ->add('biography', null, [
+                'label' => 'Biographie',
+                'attr' => ['class' => 'form-control mb-3'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Merci de renseigner un mot de passe',
+                        'message' => 'Merci de renseigner une biographie',
                     ]),
                 ]
             ])

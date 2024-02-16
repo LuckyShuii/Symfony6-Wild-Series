@@ -4,7 +4,24 @@
 
 {% block body %}
 <main class="container">
-    <h1 class="mt-5 mb-5">Mon espace privé 😎</h1>
+    <h1 class="mt-5">Mon espace privé 😎</h1>
+    {% if "ROLE_ADMIN" in app.user.roles %}
+        <p>🚨 Vous êtes un <a class="text-danger text-decoration-none" href="{{ path('program_admin_index') }}">administrateur</a></p>
+    {% else %}
+        <p>🚀 Vous êtes un <span class="text-danger text-decoration-none">utilisateur</span></p>
+    {% endif %}
+    <div class="card mb-4 bg-warning">
+        <div class="card-body mt-2">
+            <h5 class="mb-4">👷🏼‍♂️ À venir dans une prochaine version </h5>
+            <ul class="list-unstyled ms-4">
+                <li>🔨 Modifier son image</li>
+                <li>🔨 Modifier toutes ses informations</li>
+                <li>🔨 Voir ses commentaires</li>
+                <li>🔨 Voir ses likes (commentaires & séries)</li>
+                <li>🔨 Voir les séries notées comme "déjà vues"</li>
+            </ul>
+        </div>
+    </div>
     <hr>
     <div class="d-flex mt-4">
         <div id="user_information" class="d-flex mb-4 align-items-center">

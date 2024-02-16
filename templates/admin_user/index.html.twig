@@ -11,7 +11,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Avatar</th>
+                <th>Pseudo</th>
                 <th>Email</th>
                 <th>Roles</th>
                 <th class="th-action">Actions</th>
@@ -20,9 +21,14 @@
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
+                <td><img id="user_index_picture_admin" src="{{ user.picture ?? asset('build/images/user_pictures/profile/default.svg') }}" alt="{{ user.username }}" class="avatar"></td>
+                <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>
+                    {% for role in user.roles %}
+                        <span class="badge bg-{{ role == "ROLE_ADMIN" ? "danger" : "primary" }}">{{ role }}</span>
+                    {% endfor %}
+                </td>
                 <td>
                     <a href="{{ path('app_admin_user_show', {'id': user.id}) }}"><button type="button" class="btn btn-primary ">Voir</button></a>
                     <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}"><button type="button" class="btn btn-secondary">Modifier</button></a>
