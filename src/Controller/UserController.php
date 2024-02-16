@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\WatchList;
+use App\Form\BiographyType;
+use App\Form\DTO\UserCredentialsDTO;
+use App\Form\UserCredentialsType;
 use App\Repository\ProgramRepository;
 use App\Repository\UserRepository;
 use App\Repository\WatchListRepository;
@@ -14,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route('/user', name: 'app_user')]
 class UserController extends AbstractController
@@ -38,6 +43,66 @@ class UserController extends AbstractController
 
         return $this->render('user/index.html.twig', [
             'watchlists' => $watchlists
+        ]);
+    }
+
+    #[Route('/biography/edit', name: '_biography_edit', methods: ['POST', 'GET'])]
+    #[IsGranted('VOTER_USER', statusCode: 403, message: 'Vous devez être connecté pour accéder à cette page')]
+    public function biographyEdit(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+        $user = $userRepository->find($this->getUser()->getId());
+        $form = $this->createForm(BiographyType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_user');
+        }
+
+        return $this->render('user/biography_edit_form.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/credentials/edit', name: '_credentials_edit', methods: ['POST', 'GET'])]
+    #[IsGranted('VOTER_USER', statusCode: 403, message: 'Vous devez être connecté pour accéder à cette page')]
+    public function credentialsEdit(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $user = $userRepository->find($this->getUser()->getId());
+
+        $userCredentialsDTO = new UserCredentialsDTO();
+        $userCredentialsDTO->username = $user->getUsername();
+        $userCredentialsDTO->firstname = $user->getFirstname();
+        $userCredentialsDTO->lastname = $user->getLastname();
+        $userCredentialsDTO->email = $user->getEmail();
+        $userCredentialsDTO->password = $user->getPassword();
+
+        $form = $this->createForm(UserCredentialsType::class, $userCredentialsDTO);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Update the User object with the data from the DTO
+            $user->setUsername($userCredentialsDTO->username);
+            $user->setFirstname($userCredentialsDTO->firstname);
+            $user->setLastname($userCredentialsDTO->lastname);
+            $user->setEmail($userCredentialsDTO->email);
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $userCredentialsDTO->password
+                )
+            );
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_user');
+        }
+
+        return $this->render('user/credentials_edit_form.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}✏️ Biographie{% endblock %}
+
+{% block body %}
+    <main class="container mt-5">
+        <h1 class="my-4">Modifier ma biographie</h1>
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-primary mt-2">⊕ Modifier</button>
+            <a href="{{ path('app_user') }}"><button type="button" class="btn btn-secondary mt-2">Retour</button></a>
+        {{ form_end(form) }}
+    </main>
+{% endblock %}

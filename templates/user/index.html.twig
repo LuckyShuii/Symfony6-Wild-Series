@@ -16,6 +16,7 @@
             <ul class="list-unstyled ms-4">
                 <li>🔨 Modifier son image</li>
                 <li>🔨 Modifier toutes ses informations</li>
+                <li>🔨 Intégrer wiziwig</li>
                 <li>🔨 Voir ses commentaires</li>
                 <li>🔨 Voir ses likes (commentaires & séries)</li>
                 <li>🔨 Voir les séries notées comme "déjà vues"</li>
@@ -42,7 +43,7 @@
                 <div class="d-flex align-self-end">
                     <div>
                         {# {{ path('app_user_edit', {'id': app.user.id}) }} #}
-                        <a href="" class="btn btn-primary">✎ Mes informations</a>
+                        <a href="{{ path('app_user_credentials_edit') }}" class="btn btn-primary">✎ Mes informations</a>
                         {# {{ path('app_user_edit_password', {'id': app.user.id}) }} #}
                         <a href="" class="btn btn-secondary">✎ Mot de passe</a>
                     </div>
@@ -54,12 +55,12 @@
     <div class="d-flex flex-column mb-4">
         <h3>Ma Bio ✐</h3>
     {% if app.user.biography is not null %}
-        <p>↪ <q>{{ app.user.biography }}</q></p>
-        <a href=""><button class="btn btn-primary">✎ Modifier ma biographie</button></a>
+        <p>↪ <q>{{ app.user.biography|raw }}</q></p>
+        <a href="{{ path('app_user_biography_edit') }}"><button class="btn btn-primary">✎ Modifier ma biographie</button></a>
     {% else %}
         <p>Vous n'avez pas encore de biographie..</p>
         {# {{ path('app_user_edit', {'id': app.user.id}) }} #}
-        <a href=""><button class="btn btn-primary">✎ Ajouter une biographie</button></a>
+        <a href="{{ path('app_user_biography_edit') }}"><button class="btn btn-primary">✎ Ajouter une biographie</button></a>
     {% endif %}
     </div>
     <hr>
@@ -68,7 +69,7 @@
         {{ include('/components/_button_all_series.html.twig') }}
     </div>
     {% if watchlists is defined %}
-        <div class="album bg-light">
+        <div class="album">
             <div class="container">
                 <div class="row">
                 {% set isFav = false %}

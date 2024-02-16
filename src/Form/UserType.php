@@ -54,12 +54,7 @@ class UserType extends AbstractType
             ])
             ->add('biography', null, [
                 'label' => 'Biographie',
-                'attr' => ['class' => 'form-control mb-3'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Merci de renseigner une biographie',
-                    ]),
-                ]
+                'attr' => ['class' => 'form-control mb-3']
             ])
             ->add('roles', ChoiceType::class, [
                 'choices' => [

@@ -6,7 +6,9 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -18,18 +20,28 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('firstname', null, [
+            ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
                 'attr' => [
                     'placeholder' => 'John',
                     'class' => 'form-control mb-3'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un prénom'
+                    ])
                 ]
             ])
-            ->add('lastname', null, [
+            ->add('lastname', TextType::class, [
                 'label' => 'Nom',
                 'attr' => [
                     'placeholder' => 'Doe',
                     'class' => 'form-control mb-3'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un nom'
+                    ])
                 ]
             ])
             ->add('username', null, [
@@ -37,13 +49,23 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'johndoe23',
                     'class' => 'form-control mb-3'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un nom d\'utilisateur'
+                    ])
                 ]
             ])
-            ->add('email', null, [
+            ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'attr' => [
                     'placeholder' => 'mon@email.com',
                     'class' => 'form-control mb-3'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer une adresse email'
+                    ])
                 ]
             ])
             ->add('agreeTerms', CheckboxType::class, [
@@ -58,10 +80,9 @@ class RegistrationFormType extends AbstractType
                     'class' => 'form-check-input mb-3'
                 ]
             ])
-            ->add('plainPassword', PasswordType::class, [
+            ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
-                'mapped' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',
                     'placeholder' => '******',
