@@ -71,7 +71,11 @@ class UserController extends AbstractController
         $program = $programRepository->find($request->query->get('program_id'));
         $page = $request->query->get('page');
 
-        $page = $page === 'user' ? 'app_user' : 'program_index';
+        $page = match ($page) {
+            'program_index' => 'program_index',
+            'user_index' => 'user_index',
+            default => 'program_index'
+        };
 
         $watchlists = $watchListRepository->findByUser($user);
 

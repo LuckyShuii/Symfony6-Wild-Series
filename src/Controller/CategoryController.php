@@ -85,6 +85,12 @@ class CategoryController extends AbstractController
             );
         }
 
+        if (empty($category)) {
+            throw $this->createNotFoundException(
+                'No category with ' . $categoryName . ' name, found in category\'s table.'
+            );
+        }
+
         $programs = $category[0]->getPrograms();
 
         return $this->render('category/show_with_programs.html.twig', [
