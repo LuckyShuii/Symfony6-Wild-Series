@@ -82,7 +82,7 @@ class UserCredentialsType extends AbstractType
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Photo de profil',
                 'required' => false,
-                'allow_delete' => true,
+                'allow_delete' => false,
                 'download_uri' => false,
                 'image_uri' => false,
                 'attr' => [
