@@ -19,8 +19,8 @@ class WatchList
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToMany(targetEntity: Program::class)]
-    private Collection $programs;
+    #[ORM\ManyToMany(targetEntity: Program::class, inversedBy: 'watchLists')]
+    private $programs;
 
     #[ORM\Column]
     private ?bool $seen = null;
