@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MovieAPIController!{% endblock %}
+
+{% block body %}
+<main class="container mt-5">
+    {% for movie in data.results %}
+    <div class="card mb-4">
+        <h1 class="h4">Titre : {{ movie.titleText.text }}</h1>
+        <img width="200" src="{{ movie.primaryImage.url ?? '' }}" alt="{{ movie.primaryImage.caption.plainText ?? '' }}">
+    </div>
+    {% endfor %}
+</main>
+{% endblock %}
